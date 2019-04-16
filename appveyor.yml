@@ -7,10 +7,13 @@ branches:
   except:
   - gh-pages
 
+environment:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
 before_build:
 - ps: |
     dotnet tool install -g nbgv
-    $env:SEMVER = $HOME\.dotnet\tools\nbgv get-version -v SemVer2
+    $env:SEMVER = $HOME/.dotnet/tools/nbgv get-version -v SemVer2
     Update-AppveyorBuild -Version "$env:SEMVER ($env:APPVEYOR_BUILD_ID)"
 
 build_script:
