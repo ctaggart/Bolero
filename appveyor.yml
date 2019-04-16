@@ -9,6 +9,8 @@ branches:
 
 environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  GH_TOKEN:
+    secure: dhFy1eZoqG4QPkKTuLFxix7QQMxaIyIpYjkvTU3CukYZz1CEOJeHfBSaT8tkPsGL
 
 before_build:
 - ps: |
@@ -24,11 +26,6 @@ build_script:
 
 # test_script:
 # - ps: '& $env:BUILD_SCRIPT -s -t test -c Release --push-tests "https://ci.appveyor.com/api/testresults/mstest/$env:APPVEYOR_JOB_ID"'
-
-environment:
-  # BUILD_SCRIPT: ./build.cmd
-  GH_TOKEN:
-    secure: dhFy1eZoqG4QPkKTuLFxix7QQMxaIyIpYjkvTU3CukYZz1CEOJeHfBSaT8tkPsGL
 
 # all builds on the AppVeyor NuGet feed
 artifacts:
