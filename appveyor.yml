@@ -13,11 +13,9 @@ environment:
     secure: dhFy1eZoqG4QPkKTuLFxix7QQMxaIyIpYjkvTU3CukYZz1CEOJeHfBSaT8tkPsGL
 
 before_build:
-- ps: |
-    dotnet tool install -g nbgv
-- sh: ls -al $HOME/.dotnet/tools/
-    # $env:SEMVER = bash -c $HOME/.dotnet/tools/nbgv get-version -v SemVer2
-    # Update-AppveyorBuild -Version "$env:SEMVER ($env:APPVEYOR_BUILD_ID)"
+- sh: dotnet tool install -g nbgv
+- sh: export SEMVER=`nbgv get-version -v SemVer2`
+- ps: Update-AppveyorBuild -Version "$env:SEMVER ($env:APPVEYOR_BUILD_ID)"
 
 build_script:
 # - sh: BUILD_SCRIPT=./build.sh   # Use build.cmd on Windows, build.sh on Linux
