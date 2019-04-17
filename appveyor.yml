@@ -15,8 +15,9 @@ environment:
 before_build:
 - ps: |
     dotnet tool install -g nbgv
-    $env:SEMVER = bash -c $HOME/.dotnet/tools/nbgv get-version -v SemVer2
-    Update-AppveyorBuild -Version "$env:SEMVER ($env:APPVEYOR_BUILD_ID)"
+- sh: ls -al $HOME/.dotnet/tools/
+    # $env:SEMVER = bash -c $HOME/.dotnet/tools/nbgv get-version -v SemVer2
+    # Update-AppveyorBuild -Version "$env:SEMVER ($env:APPVEYOR_BUILD_ID)"
 
 build_script:
 # - sh: BUILD_SCRIPT=./build.sh   # Use build.cmd on Windows, build.sh on Linux
