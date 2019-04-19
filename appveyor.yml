@@ -18,8 +18,7 @@ before_build:
   - ps: Update-AppveyorBuild -Version "$env:SEMVER ($env:APPVEYOR_BUILD_ID)"
 
 build_script:
-# - ps: '& $env:BUILD_SCRIPT -t pack -c Release -v "$env:SEMVER" /p:GhPages=true'
-  - sh: docker run -v $APPVEYOR_BUILD_FOLDER:/src -w /src mcr.microsoft.com/dotnet/core/sdk:2.2.105 ./build.sh -t pack -c Release -v $SEMVER
+  - sh: docker run -v $APPVEYOR_BUILD_FOLDER:/src -w /src mcr.microsoft.com/dotnet/core/sdk:2.2.105 ./build.sh -t pack -c Release -v $SEMVER /p:GhPages=true
 
 test_script:
   # Selenium tests don't run in the docker image
