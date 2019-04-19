@@ -19,7 +19,7 @@ before_build:
 
 build_script:
 # - ps: '& $env:BUILD_SCRIPT -t pack -c Release -v "$env:SEMVER" /p:GhPages=true'
-  - sh: docker run --user $(id -u):$(id -g) -v $APPVEYOR_BUILD_FOLDER:/src -w /src -e NUGET_PACKAGES:/src/.nuget mcr.microsoft.com/dotnet/core/sdk:2.2.105 ./build.sh -t pack -c Release -v $SEMVER
+  - sh: docker run -v $APPVEYOR_BUILD_FOLDER:/src -w /src -e NUGET_PACKAGES:/src/.nuget mcr.microsoft.com/dotnet/core/sdk:2.2.105 ./build.sh -t pack -c Release -v $SEMVER
 
 test_script:
   # Selenium tests don't run in the docker image
