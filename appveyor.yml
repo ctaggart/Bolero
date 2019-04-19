@@ -23,7 +23,7 @@ build_script:
   # - sh: export NUGET_PACKAGES=$APPVEYOR_BUILD_FOLDER/.nuget
 # - ps: '& $env:BUILD_SCRIPT -t pack -c Release -v "$env:SEMVER" /p:GhPages=true'
   # - sh: echo "build it"
-  - sh: docker run -v $APPVEYOR_BUILD_FOLDER:/src -w /src -e NUGET_PACKAGES:/src/.nuget mcr.microsoft.com/dotnet/core/sdk:2.2.105-alpine3.8 ./build.sh
+  - sh: docker run -v $APPVEYOR_BUILD_FOLDER:/src -w /src -e NUGET_PACKAGES:/src/.nuget mcr.microsoft.com/dotnet/core/sdk:2.2.105-bionic ./build.sh
 
 # test_script:
 # - ps: '& $env:BUILD_SCRIPT -s -t test -c Release --push-tests "https://ci.appveyor.com/api/testresults/mstest/$env:APPVEYOR_JOB_ID"'
