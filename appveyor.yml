@@ -25,7 +25,7 @@ test_script:
   # Selenium tests don't run in the docker image
   - sh: export NUGET_PACKAGES=$APPVEYOR_BUILD_FOLDER/.nuget
   - sh: pwd
-  - sh: echo "APPVEYOR_BUILD_FOLDER: $APPVEYOR_BUILD_FOLDER"
+  - sh: 'echo "APPVEYOR_BUILD_FOLDER: $APPVEYOR_BUILD_FOLDER"'
   - sh: ls -al
   - sh: ./build.sh -s -t test -c Release --push-tests https://ci.appveyor.com/api/testresults/mstest/$APPVEYOR_JOB_ID
 
