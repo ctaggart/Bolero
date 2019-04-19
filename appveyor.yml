@@ -13,6 +13,7 @@ environment:
     secure: dhFy1eZoqG4QPkKTuLFxix7QQMxaIyIpYjkvTU3CukYZz1CEOJeHfBSaT8tkPsGL
 
 before_build:
+  - sh: rm global.json
   - sh: dotnet tool install -g nbgv
   - sh: export SEMVER=`nbgv get-version -v SemVer2`
   - ps: Update-AppveyorBuild -Version "$env:SEMVER ($env:APPVEYOR_BUILD_ID)"
