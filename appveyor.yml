@@ -23,6 +23,7 @@ build_script:
 test_script:
   # Selenium tests don't run in the docker image
   - sh: sudo chown -R appveyor:appveyor $APPVEYOR_BUILD_FOLDER
+  - sh: rm paket-files/paket.restore.cached
   - sh: ./build.sh -s -t test -c Release --push-tests https://ci.appveyor.com/api/testresults/mstest/$APPVEYOR_JOB_ID
 
 # all builds on the AppVeyor NuGet feed
