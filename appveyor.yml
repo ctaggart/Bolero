@@ -19,10 +19,14 @@ before_build:
 
 build_script:
 # - ps: '& $env:BUILD_SCRIPT -t pack -c Release -v "$env:SEMVER" /p:GhPages=true'
-  - sh: docker run -v $APPVEYOR_BUILD_FOLDER:/src -w /src -e NUGET_PACKAGES:/src/.nuget mcr.microsoft.com/dotnet/core/sdk:2.2.105 ./build.sh -t pack -c Release -v $SEMVER
+  - sh: docker run --user $(id -u):$(id -g) -v $APPVEYOR_BUILD_FOLDER:/src -w /src -e NUGET_PACKAGES:/src/.nuget mcr.microsoft.com/dotnet/core/sdk:2.2.105 ./build.sh -t pack -c Release -v $SEMVER
 
 test_script:
   # Selenium tests don't run in the docker image
+  - sh: export NUGET_PACKAGES=$APPVEYOR_BUILD_FOLDER/.nuget
+  - sh: pwd
+  - sh: echo "APPVEYOR_BUILD_FOLDER: $APPVEYOR_BUILD_FOLDER"
+  - sh: ls -al
   - sh: ./build.sh -s -t test -c Release --push-tests https://ci.appveyor.com/api/testresults/mstest/$APPVEYOR_JOB_ID
 
 # all builds on the AppVeyor NuGet feed
@@ -39,5 +43,5 @@ for:
   on_success:
   - ps: .\tools\gh-pages.ps1 -env appveyor
 
-cache:
-- .nuget
+# cache:
+# - .nuget
