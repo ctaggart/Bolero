@@ -18,14 +18,8 @@ before_build:
   - ps: Update-AppveyorBuild -Version "$env:SEMVER ($env:APPVEYOR_BUILD_ID)"
 
 build_script:
-# - sh: BUILD_SCRIPT=./build.sh   # Use build.cmd on Windows, build.sh on Linux
-  # - sh: export NUGET_PACKAGES=$APPVEYOR_BUILD_FOLDER/.nuget
 # - ps: '& $env:BUILD_SCRIPT -t pack -c Release -v "$env:SEMVER" /p:GhPages=true'
-  # - sh: echo "build it"
-  - sh: docker run -v $APPVEYOR_BUILD_FOLDER:/src -w /src -e NUGET_PACKAGES:/src/.nuget mcr.microsoft.com/dotnet/core/sdk:2.2.105-alpine3.8 ./build.sh
-
-# test_script:
-# - ps: '& $env:BUILD_SCRIPT -s -t test -c Release --push-tests "https://ci.appveyor.com/api/testresults/mstest/$env:APPVEYOR_JOB_ID"'
+  - sh: docker run -v $APPVEYOR_BUILD_FOLDER:/src -w /src -e NUGET_PACKAGES:/src/.nuget mcr.microsoft.com/dotnet/core/sdk:2.2.105-bionic ./build.sh -t ci -c Release -v $SEMVER --push-tests "https://ci.appveyor.com/api/testresults/mstest/$APPVEYOR_JOB_ID"
 
 # all builds on the AppVeyor NuGet feed
 artifacts:
@@ -41,12 +35,5 @@ for:
   on_success:
   - ps: .\tools\gh-pages.ps1 -env appveyor
 
-# Only use cache on Windows build
-# (AV caches for each matrix item separately, and the cache is too large)
-# - matrix:
-#     only:
-#     - image: Visual Studio 2017
-#   cache:
-#   - .nuget
 cache:
 - .nuget

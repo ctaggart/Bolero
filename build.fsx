@@ -160,6 +160,9 @@ Target.create "test-debug" (fun o ->
     dotnet' "tests/Unit" ["VSTEST_HOST_DEBUG", "1"] "test" "%s" (buildArgs o)
 )
 
+Target.description "Run everything for continuous integration"
+Target.create "ci" ignore
+
 "corebuild"
     ==> "build"
     ==> "pack"
@@ -170,5 +173,10 @@ Target.create "test-debug" (fun o ->
 
 "build" ?=> "test"
 "build" ?=> "test-debug"
+
+"build"
+    ==> "test"
+    ==> "pack"
+    ==> "ci"
 
 Target.runOrDefaultWithArguments "build"
